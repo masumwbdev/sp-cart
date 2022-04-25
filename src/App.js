@@ -3,10 +3,15 @@ import './App.css';
 import Cart from './Pages/Cart/Cart';
 import Navbar from './Pages/Navbar/Navbar';
 import Products from './Pages/Products/Products';
+ 
+  // save localstorage 
+const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart" || "[]"));
 
 function App() {
   const [show, setShow] = useState(true);
-  const [cart, setCart] = useState([]);
+
+  // empty array [] to cartFromLocalStorage for save data
+  const [cart, setCart] = useState(cartFromLocalStorage);
 
   const handleClick = (item) => {
     if (cart.indexOf(item) !== -1) return;
@@ -21,6 +26,11 @@ function App() {
     if (arr[ind].amount === 0) arr[ind].amount = 1;
     setCart([...arr]);
   };
+
+  // save localStorage 
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }, [cart])
 
   return (
     <div>
